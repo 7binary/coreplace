@@ -10,6 +10,7 @@
     "access": "public"
   },
   "scripts": {
+    "start": "ts-node src/index.ts",
     "dev": "ts-node src/index.ts",
     "build": "esbuild src/index.ts --platform=node --outfile=dist/index.js --bundle --minify --define:process.env.NODE_ENV=\\\"production\\\"",
     "prepublishOnly": "yarn build",

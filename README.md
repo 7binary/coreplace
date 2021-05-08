@@ -2,7 +2,7 @@
 
 Example: 
 ```shell
-npx replace feed.admin -m feed.admin -c feed-admin -s feed-admin-stage -a admin -n feed -h feed.amolatina.com -t /
+npx replace -p feed.admin -m feed.admin -c feed-admin -s feed-admin-stage -a admin -n feed -h feed.amolatina.com -t /
 ```
 
 ## Templates
@@ -50,11 +50,11 @@ automation.yml
 
 ```json
 {
-  "build": "tsc",
-  "start": "nodemon",
-  "inspect": "nodemon --inspect src/index.ts",
-  "test": "ts-standard --verbose && jest",
-  "fix": "ts-standard --verbose --fix",
-  "prepare": "husky install"
+  "start": "ts-node src/index.ts",
+  "dev": "ts-node src/index.ts",
+  "build": "esbuild src/index.ts --platform=node --outfile=dist/index.js --bundle --minify --define:process.env.NODE_ENV=\\\"production\\\"",
+  "prepublishOnly": "yarn build",
+  "clean": "del ./dist/*",
+  "pub": "yarn clean && yarn publish"
 }
 ```

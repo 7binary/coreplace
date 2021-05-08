@@ -17,7 +17,7 @@ interface IOptions {
   namespaceName?: string
 }
 
-const k8sFiles = ['./k8s/**/*.yml', './automation.yml']
+const k8sFiles = ['./k8s/**/*.yml', './k8s/**/*.yaml', './automation.yml', './automation.yaml']
 const rules: { [key: string]: IRule } = {
   packageName: { files: ['./package.json'], from: '---replace-package-name---' },
   mongodbName: { files: ['./.env.*'], from: '---replace-mongodb-name---' },
