@@ -1,6 +1,6 @@
 {
   "name": "coreplace",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "files": [
     "dist"
@@ -11,13 +11,10 @@
   },
   "scripts": {
     "dev": "ts-node src/index.ts",
-    "run": "node dist/index.js serve",
-    "start": "tsc --watch --preserveWatchOutput",
-    "prepublishOnly": "esbuild src/index.ts --platform=node --outfile=dist/index.js --bundle --minify --define:process.env.NODE_ENV=\\\"production\\\"",
-    "clean": "del ./build/*",
-    "build": "yarn clean && tsc && tscpaths -p tsconfig.json -s ./src -o ./build",
-    "git": "git add . && git commit -m \"Updates\" --allow-empty && git push",
-    "pub": "npm run git && npm version patch && npm run build && npm publish --access public"
+    "build": "esbuild src/index.ts --platform=node --outfile=dist/index.js --bundle --minify --define:process.env.NODE_ENV=\\\"production\\\"",
+    "prepublishOnly": "yarn build",
+    "clean": "del ./dist/*",
+    "pub": "yarn clean && yarn publish"
   },
   "keywords": [],
   "author": "",
