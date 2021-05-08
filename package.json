@@ -25,7 +25,7 @@
     "chalk": "4.1.1",
     "commander": "7.2.0",
     "del-cli": "3.0.1",
-    "esbuild": "0.8.26",
+    "esbuild": "0.11.20",
     "replace-in-file": "6.2.0",
     "ts-node": "9.1.1",
     "typescript": "4.2.4"
