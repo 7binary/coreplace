@@ -49,13 +49,18 @@ program.action(async (options: IOptions, cmd: Command) => {
   const ignore = ['node_modules', '.git', '.idea', '.husky', 'dist', 'build', '.eslintcache', '.npmrc']
     .map(dir => `${dir}/**/*.*`)
     .concat(['README.md', 'package-lock.json', 'yarn.lock'])
+  const notReplacedText = chalk.grey('не нашлось файлов для замены')
 
   // выполнение замен по аргументам запуска: {{replace-something}}=ONE ---replace-anything---=TWO
   for (let i = 0; i < cmd.args.length; i++) {
     const pair = cmd.args[i]
     const [from, to] = pair.split('=')
     if (!from || !to) {
-      console.log(`${chalk.redBright('Invalid pair ::')} ${chalk.redBright(pair)}`)
+      console.log(`${chalk.redBright('Invalid pair Error')} :: ${chalk.yellowBright(pair)} :: Example: {{replace-key}}=value`)
+      continue
+    }
+    if (!from.startsWith('{{replace-') && !from.startsWith('---replace-')) {
+      console.log(`${chalk.redBright('Invalid key Error')} :: ${chalk.yellowBright(pair)} :: Example: {{replace-key}}=value`)
       continue
     }
     try {
@@ -67,7 +72,7 @@ program.action(async (options: IOptions, cmd: Command) => {
         to
       })
       const successFiles = results.filter(r => r.hasChanged).map(r => chalk.greenBright(r.file)).join(' ')
-      console.log(`${chalk.yellowBright(from)} => ${chalk.blueBright.bold(to)} :: ${successFiles}`)
+      console.log(`${chalk.yellowBright(from)} => ${chalk.blueBright.bold(to)} :: ${successFiles || notReplacedText}`)
     } catch (err) {
       console.log(`${chalk.yellowBright(from)} => ${chalk.blueBright.bold(to)} :: ${chalk.redBright(err)}`)
     }
